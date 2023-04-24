@@ -2,35 +2,55 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.*;
 
 public class Simon extends JPanel implements ActionListener {
 
     private int width;
     private int height;
+    public int flashed;
+    public int indexPattern;
+    public ArrayList<Integer> currentPattern;
 
-    private JPanel backpanel;
-
+    public JPanel backpanel;
+    public Random randomizer;
+    private Timer timer;
     public JLabel SimonSaysLabel;
     public ImageIcon SimonSays;
     public ImageIcon Original;
     public ImageIcon imagebutton;
 
     public BufferedImage img;
+    
+    public boolean makePattern;
 
     public JButton red;
     public JButton redd;
     public JButton green;
-    public JButton orange;
+    public JButton yellow;
     public JButton blue;
 
     public Simon(){
-        
+        makePattern = true;
+        //flashed = 1;
         setLayout(new GridLayout(1,1,10,10));
         backpanel = new JPanel();
         backpanel.setBackground(Color.GRAY);
         backpanel.setLayout(new GridLayout(2,2,10,10));
+        start();
+        
+        timer = new Timer(5, new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				backpanel.repaint();
+				//this method so its a continuous animation
+			}
+		});
 
+		timer.start();
+        
         red = new JButton();
         red.setBackground(Color.RED);
         red.addActionListener(new ActionListener(){  
@@ -42,8 +62,8 @@ public class Simon extends JPanel implements ActionListener {
         });  
         //red.addActionListener(this);
 
-        orange = new JButton();
-        orange.setBackground(Color.ORANGE);
+        yellow = new JButton();
+        yellow.setBackground(Color.YELLOW);
 
 
         green = new JButton();
@@ -57,11 +77,36 @@ public class Simon extends JPanel implements ActionListener {
         backpanel.add(red);
         backpanel.add(blue);
         backpanel.add(green);
-        backpanel.add(orange);
-
+        backpanel.add(yellow);
         add(backpanel);
 
+        //next set of if statements are for the flashing
 
+        if(flashed == 1){
+            red.setBackground(Color.RED);
+        }else{
+            red.setBackground(Color.RED.darker());
+        }
+
+        if(flashed == 2){
+            yellow.setBackground(Color.YELLOW);
+        }else{
+            yellow.setBackground(Color.YELLOW.darker());
+        }
+
+        if(flashed == 3){
+            green.setBackground(Color.GREEN);
+        }else{
+            green.setBackground(Color.GREEN.darker());
+        }
+
+        if(flashed == 4){
+            blue.setBackground(Color.BLUE);
+        }else{
+            blue.setBackground(Color.BLUE.darker());
+        }
+
+//note to self to implement later. Glowing button when hovered and press glowtime 25.30 in the video when it is not creating a pattern
 
         width = 300;
         height = 300;
@@ -117,10 +162,19 @@ public class Simon extends JPanel implements ActionListener {
  
     }
 
+    public void start(){
+        randomizer = new Random();
+        currentPattern = new ArrayList<Integer>();
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+       if(makePattern){
+            flashed = randomizer.nextInt(3) + 1;
+            currentPattern.add(flashed);
+       }
+       backpanel.repaint();
     }
 
    /*  protected void paintComponent(Graphics g){

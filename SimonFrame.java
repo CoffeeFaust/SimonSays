@@ -22,7 +22,7 @@ public class SimonFrame extends JFrame{
         		//this is the timer for the animation to pace itself
 		timer = new Timer(5, new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				sc.repaint();
+				f.repaint();
 				//this method so its a continuous animation
 			}
 		});

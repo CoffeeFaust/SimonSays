@@ -1,15 +1,17 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
-public class Simon extends JPanel {
+public class Simon extends JPanel implements ActionListener {
 
     private int width;
     private int height;
-    public JPanel simon;
+
+    private JPanel backpanel;
 
     public JLabel SimonSaysLabel;
-    public JLabel oho;
     public ImageIcon SimonSays;
     public ImageIcon Original;
     public ImageIcon imagebutton;
@@ -17,16 +19,59 @@ public class Simon extends JPanel {
     public BufferedImage img;
 
     public JButton red;
+    public JButton redd;
+    public JButton green;
+    public JButton orange;
+    public JButton blue;
 
     public Simon(){
+        
+        setLayout(new GridLayout(1,1,10,10));
+        backpanel = new JPanel();
+        backpanel.setBackground(Color.GRAY);
+        backpanel.setLayout(new GridLayout(2,2,10,10));
+
+        red = new JButton();
+        red.setBackground(Color.RED);
+        red.addActionListener(new ActionListener(){  
+            public void actionPerformed(ActionEvent e){  
+                if(e.getSource()==red){
+                    System.out.println("reached");
+                }
+                    }  
+        });  
+        //red.addActionListener(this);
+
+        orange = new JButton();
+        orange.setBackground(Color.ORANGE);
+
+
+        green = new JButton();
+        green.setBackground(Color.GREEN);
+
+
+        blue = new JButton();
+        blue.setBackground(Color.BLUE);
+
+
+        backpanel.add(red);
+        backpanel.add(blue);
+        backpanel.add(green);
+        backpanel.add(orange);
+
+        add(backpanel);
+
+
+
         width = 300;
         height = 300;
         setBackground(Color.GRAY);
-        oho = new JLabel();
 
         ImageIcon imagebutton = new ImageIcon(new ImageIcon("SimonSaysOriginal.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-        red = new JButton(imagebutton);
-        red.setBounds(100,100,width,height);
+        redd = new JButton(imagebutton);
+        //redd.setBounds(100,100,width,height);
+
+        /* 
 
         JPanel redpanel = new JPanel();
         redpanel.setBackground(Color.RED);
@@ -46,7 +91,7 @@ public class Simon extends JPanel {
         add(redpanel);
         add(yellowpanel);
         add(bluepanel);
-        add(red);
+        add(red);*/
         //redpanel.setBounds(50,50,250,250);
        /*
         try { //remember this is for getting images in by labels :))
@@ -70,6 +115,12 @@ public class Simon extends JPanel {
         }*/ 
 
  
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 
    /*  protected void paintComponent(Graphics g){

@@ -38,19 +38,17 @@ public class SimonFrame extends JFrame{
         mainpanel.setBackground(Color.GRAY);
 		mainpanel.setPreferredSize(new Dimension(1000, 800));
 
-		JPanel orangepanel = new JPanel();
-        orangepanel.setBackground(Color.ORANGE);
+		JPanel bluepanel = new JPanel();
+        bluepanel.setBackground(Color.BLUE);
 
-		JPanel pinkpanel = new JPanel();
-        pinkpanel.setBackground(Color.PINK);
+        JPanel yellowpanel = new JPanel();
+        yellowpanel.setBackground(Color.YELLOW);
 
-		JPanel greenpanel = new JPanel();
-        greenpanel.setBackground(Color.GREEN);
+		JPanel redpanel = new JPanel();
+        bluepanel.setBackground(Color.RED);
 
-		JPanel purplepanel = new JPanel();
-        purplepanel.setBackground(Color.WHITE);
-
-
+        JPanel greenpanel = new JPanel();
+        yellowpanel.setBackground(Color.GREEN);
 		
 		//f.setLayout(new GridLayout(2,3, 10, 10));
 		mainpanel.setLayout(new GridLayout(2,3, 10, 10));
@@ -58,11 +56,10 @@ public class SimonFrame extends JFrame{
 		f.add(sc);
 		//f.add(simon);
 		mainpanel.add(simon);
-		mainpanel.add(orangepanel);
-		mainpanel.add(pinkpanel);
+		mainpanel.add(redpanel);
+		mainpanel.add(bluepanel);
+		mainpanel.add(yellowpanel);
 		mainpanel.add(greenpanel);
-		mainpanel.add(purplepanel);
-
 		f.add(mainpanel);
 		
 

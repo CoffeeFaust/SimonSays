@@ -12,12 +12,21 @@ public class Simon extends JPanel {
     public JLabel oho;
     public ImageIcon SimonSays;
     public ImageIcon Original;
+    public ImageIcon imagebutton;
 
     public BufferedImage img;
 
+    public JButton red;
+
     public Simon(){
+        width = 300;
+        height = 300;
         setBackground(Color.GRAY);
         oho = new JLabel();
+
+        ImageIcon imagebutton = new ImageIcon(new ImageIcon("SimonSaysOriginal.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        red = new JButton(imagebutton);
+        red.setBounds(100,100,width,height);
 
         JPanel redpanel = new JPanel();
         redpanel.setBackground(Color.RED);
@@ -28,13 +37,23 @@ public class Simon extends JPanel {
 
         JPanel yellowpanel = new JPanel();
         yellowpanel.setBackground(Color.YELLOW);
+
+        setLayout(new GridLayout(2,2,10,10));
+
+
+        //redpanel.add(SimonSaysLabel);
+        //bluepanel.add(SimonSaysLabel);
+        add(redpanel);
+        add(yellowpanel);
+        add(bluepanel);
+        add(red);
         //redpanel.setBounds(50,50,250,250);
-       
-        try {
+       /*
+        try { //remember this is for getting images in by labels :))
             //Original = new ImageIcon(getClass().getResource("SimonSaysOriginal.png"));
             ImageIcon Original = new ImageIcon(new ImageIcon("SimonSaysOriginal.png").getImage().getScaledInstance(600, 400, Image.SCALE_DEFAULT));
             JLabel SimonSaysLabel = new JLabel(Original);
-            setLayout(new GridLayout(2,2,10,10));
+            
             redpanel.add(SimonSaysLabel);
             //bluepanel.add(SimonSaysLabel);
             add(redpanel);
@@ -48,7 +67,7 @@ public class Simon extends JPanel {
             e.printStackTrace();
             System.out.println("not found!");
             System.out.println(System.getProperty("user.dir"));
-        }
+        }*/ 
 
  
     }
@@ -65,4 +84,3 @@ public class Simon extends JPanel {
     }
 */
 }
-

@@ -11,9 +11,9 @@ import javax.swing.event.ChangeListener;
 
 public class Simon extends JPanel implements ActionListener, ChangeListener {
 
-    public int flashed, ticks, dark;
+    public int flashed, ticks, dark, i;
     public int indexPattern;
-    public ArrayList<Integer> currentPattern = new ArrayList<Integer>();
+    public ArrayList<Integer> currentPattern;
 
     public JPanel backpanel;
     public Random random;
@@ -43,13 +43,14 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
     public JButton blue;
 
     public Simon(){
-
+        start();
         indexPattern = 0;
         dark = 2;
         flashed = 0;
         ticks = 0;
         random = new Random();
         makePattern = true;
+        SimonStrike = false;
         pressed = false;
         setLayout(new GridLayout(1,1,10,10));
         backpanel = new JPanel();
@@ -69,8 +70,33 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
         numtimer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e){
                 ticks++;
+                flashed = 0;
+                if(dark >=0){
+                    dark--;
+                }
+                //flashed = 0;
+                if(makePattern){
+                    if(dark <= 0){
+                        if(indexPattern >= currentPattern.size()){
+                            flashed = random.nextInt(40) % 4 + 1;
+                            //System.out.println(flashed);
+                            currentPattern.add(flashed);
+                            indexPattern = 0;
+                            makePattern = false;
 
-                // Progression loop where 1 then 12 then 123 then 1234
+                        }else{
+                            flashed = currentPattern.get(indexPattern);
+                            indexPattern++;
+                        }
+                        dark = 2;
+                    }
+                }else if(indexPattern == currentPattern.size()){
+                    makePattern = true;
+                    indexPattern = 0;
+                    dark = 2;
+                }
+
+                /* Progression loop where 1 then 12 then 123 then 1234
                 if(flashed != 0 && !makePattern){
                     if(indexPattern != currentPattern.size()){
                         makePattern = true;
@@ -99,7 +125,7 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
                     else{
                         dark--;
                     }
-                }
+                }*/
 
 
                 /* for the random pattern flashes
@@ -167,9 +193,11 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
         greendark = new ImageIcon("greendark.png");
         blueimage = new ImageIcon("blue.png");
         bluedark = new ImageIcon("darkblue.png");
-
-
+        
+        
+            
         //next set of if statements are for the flashing
+        
         numtimer.start();
 		timer.start();
         setBackground(Color.GRAY);
@@ -179,6 +207,7 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
         backpanel.add(green);
         backpanel.add(yellow);
         add(backpanel);
+        //flashed = currentPattern.get(0);
     
      } 
 
@@ -201,12 +230,19 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
 //note to self to implement later. Glowing button when hovered and press glowtime 25.30 in the video when it is not creating a pattern
 
     //@Override
-    public void buttons(int fleshing){
+    public void start(){
+        indexPattern = 0;
+        currentPattern = new ArrayList<Integer>();
+        SimonStrike = false;
 
+    }
+
+    public void buttons(int fleshing){
+    
                 //this is the one that can supposedly change the size of the image within the button incase you need it (really worked! tried and tested!)
         //bluedark = new ImageIcon(new ImageIcon("bluedark.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
     flashed = fleshing;
-    
+
         red = new JButton(redimage);
         red.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  
@@ -220,13 +256,21 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
 
                 // if the current state differs from the previous state
                 if (model.isPressed() != pressed) {
-                    red.setIcon(redimage);
-                    
-                    if(!makePattern && currentPattern.get(indexPattern) == flashed){
+                    red.setIcon(redimage);      
+                    if(currentPattern.get(indexPattern) == 1){
                         indexPattern++;
-                        System.out.println(flashed);
-                        System.out.println("red reached");
+                        System.out.println("reached red");
+                        System.out.println(indexPattern);
+                    }else{
+                        SimonStrike = true;
+                        System.out.print("YOU FUCKIN SUCK");
                     }
+
+                    if(SimonStrike){
+                        start();
+                        System.out.print("YOU FUCKIN SUCK");
+                    }
+
                     ticks = 1;
                     pressed = model.isPressed();
                     pressed = false;
@@ -251,6 +295,20 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
                 // if the current state differs from the previous state
                 if (model.isPressed() != pressed) {
                     yellow.setIcon(yellowimage);
+                    if(currentPattern.get(indexPattern) == 2){
+                        indexPattern++;
+                        System.out.println("reached yellow");
+                        System.out.println(indexPattern);
+                    }else{
+                        SimonStrike = true;
+                        System.out.print("YOU FUCKIN SUCK");
+                    }
+
+                    if(SimonStrike){
+                        start();
+                        System.out.print("YOU FUCKIN SUCK");
+                    }
+                    
                     ticks = 1;
                     pressed = model.isPressed();
                     pressed = false;
@@ -275,6 +333,20 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
                 // if the current state differs from the previous state
                 if (model.isPressed() != pressed) {
                     green.setIcon(greenimage);
+                    if(currentPattern.get(indexPattern) == 3){
+                        indexPattern++;
+                        System.out.println("reached green");
+                        System.out.println(indexPattern);
+                    
+                    }else{
+                        SimonStrike = true;
+                        System.out.print("YOU FUCKIN SUCK");
+                    }
+
+                    if(SimonStrike){
+                        start();
+                        System.out.print("YOU FUCKIN SUCK");
+                    }
                     ticks = 1;
                     pressed = model.isPressed();
                     pressed = false;
@@ -299,6 +371,20 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
                 // if the current state differs from the previous state
                 if (model.isPressed() != pressed) {
                     blue.setIcon(blueimage);
+                    if(currentPattern.get(indexPattern) == 4){
+                        indexPattern++;
+                        System.out.println("reached blue");
+                        System.out.println(indexPattern);
+                    }else{
+                        SimonStrike = true;
+                        System.out.print("YOU FUCKIN SUCK");
+                    }
+
+                    if(SimonStrike){
+                        start();
+                        System.out.print("YOU FUCKIN SUCK");
+                    } 
+
                     ticks = 1;
                     pressed = model.isPressed();
                     pressed = false;
@@ -306,7 +392,7 @@ public class Simon extends JPanel implements ActionListener, ChangeListener {
                 }              
           }
         });
-
+    
     /*for(int x:currentPattern){
         int current = currentPattern.get(x);
         System.out.println(current);
